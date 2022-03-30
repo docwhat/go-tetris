@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe history of Tetris randomizers by Simon Laroche\nTetris Wiki\\E$"}

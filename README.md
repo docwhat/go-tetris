@@ -15,3 +15,4 @@ go get docwhat.org/go-tetris
 ## See Also
 
 * [_The history of Tetris randomizers_](https://simon.lc/the-history-of-tetris-randomizers) by [Simon Laroche](https://simon.lc)
+* [Tetris Wiki](https://tetris.wiki/)
