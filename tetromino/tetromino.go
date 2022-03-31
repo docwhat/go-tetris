@@ -32,3 +32,139 @@ func (t Tetromino) String() string {
 		return "?"
 	}
 }
+
+const SuperRotationSpriteSheet = `
+44I
+.... ..I. .... .I..
+IIII ..I. .... .I..
+.... ..I. IIII .I..
+.... ..I. .... .I..
+33J
+J.. .JJ ... .J.
+JJJ .J. JJJ .J.
+... .J. ..J JJ.
+33L
+..L .L. ... .L.
+LLL .L. LLL .L.
+... .LL L.. LL.
+43O
+.OO. .OO. .OO. .OO.
+.OO. .OO. .OO. .OO.
+.... .... .... ....
+33S
+.SS .S. ... S..
+SS. .SS .SS SS.
+... ..S SS. .S.
+33T
+.Z. .Z. ... .Z.
+ZZZ .ZZ ZZZ ZZ.
+... .Z. .Z. .Z.
+33Z
+ZZ. ..Z ... .Z.
+.ZZ .ZZ ZZ. ZZ.
+... .Z. .ZZ Z..
+`
+
+func (t Tetromino) GameBoyBlocks(clockwise uint) string {
+	switch t {
+	case I_PIECE:
+		switch clockwise % 2 {
+		case 0:
+			return "...." +
+				"...." +
+				"xxxx" +
+				"...."
+		case 1:
+			return ".x.." +
+				".x.." +
+				".x.." +
+				".x.."
+		}
+	case O_PIECE:
+		return "...." +
+			".xx." +
+			".xx."
+		"...."
+	case J_PIECE:
+		switch clockwise % 4 {
+		case 0:
+			return "..." +
+				"xxx" +
+				"..x"
+		case 1:
+			return ".x." +
+				".x." +
+				"xx."
+		case 2:
+			return "x.." +
+				"xxx" +
+				"..."
+		case 3:
+			return ".xx" +
+				".x." +
+				".x."
+		}
+	case L_PIECE:
+		switch clockwise % 4 {
+		case 0:
+			return "..." +
+				"xxx" +
+				"x.."
+		case 1:
+			return "xx." +
+				".x." +
+				".x."
+		case 2:
+			return "..x" +
+				"xxx" +
+				"..."
+		case 3:
+			return ".x." +
+				".x." +
+				".xx"
+		}
+	case S_PIECE:
+		switch clockwise % 2 {
+		case 0:
+			return "..." +
+				".xx" +
+				"xx."
+		case 1:
+			return "x.." +
+				"xx." +
+				".x."
+		}
+	case T_PIECE:
+		switch clockwise % 4 {
+		case 0:
+			return "..." +
+				"xxx" +
+				".x."
+		case 1:
+			return ".x." +
+				"xx." +
+				".x."
+		case 2:
+			return ".x." +
+				"xxx" +
+				"..."
+		case 3:
+			return ".x." +
+				".xx" +
+				".x."
+		}
+	case Z_PIECE:
+		switch clockwise % 2 {
+		case 0:
+			return "..." +
+				"xx." +
+				".xx"
+		case 1:
+			return ".x." +
+				"xx." +
+				"x.."
+		}
+
+	}
+
+}
