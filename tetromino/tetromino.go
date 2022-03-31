@@ -33,38 +33,6 @@ func (t Tetromino) String() string {
 	}
 }
 
-const SuperRotationSpriteSheet = `
-44I
-.... ..I. .... .I..
-IIII ..I. .... .I..
-.... ..I. IIII .I..
-.... ..I. .... .I..
-33J
-J.. .JJ ... .J.
-JJJ .J. JJJ .J.
-... .J. ..J JJ.
-33L
-..L .L. ... .L.
-LLL .L. LLL .L.
-... .LL L.. LL.
-43O
-.OO. .OO. .OO. .OO.
-.OO. .OO. .OO. .OO.
-.... .... .... ....
-33S
-.SS .S. ... S..
-SS. .SS .SS SS.
-... ..S SS. .S.
-33T
-.Z. .Z. ... .Z.
-ZZZ .ZZ ZZZ ZZ.
-... .Z. .Z. .Z.
-33Z
-ZZ. ..Z ... .Z.
-.ZZ .ZZ ZZ. ZZ.
-... .Z. .ZZ Z..
-`
-
 func (t Tetromino) GameBoyBlocks(clockwise uint) string {
 	switch t {
 	case I_PIECE:
