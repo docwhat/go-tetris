@@ -1,11 +1,20 @@
 package tetromino
 
 // SRS: https://tetris.fandom.com/wiki/SRS
-type SRS3x3Sprite struct {
-	Piece [9]bool
+func (s SRSSprite) Rotate(x, y, clockwise int) int {
+	switch len(s.Piece) {
+	case 9:
+		return s.Rotate9(x, y, clockwise)
+	case 12:
+		return s.Rotate12(x, y, clockwise)
+	case 16:
+		return s.Rotate16(x, y, clockwise)
+	default:
+		panic("unreachable")
+	}
 }
 
-func (s SRS3x3Sprite) Rotate(x, y, clockwise uint) uint {
+func (s SRSSprite) Rotate9(x, y, clockwise int) int {
 	switch clockwise % 4 {
 	case 0:
 		// 0 1 2
@@ -21,7 +30,7 @@ func (s SRS3x3Sprite) Rotate(x, y, clockwise uint) uint {
 		// 8 7 6
 		// 5 4 3
 		// 2 1 0
-		return 8 - y - x*3
+		return 8 - y*3 - x
 	case 3:
 		// 2 5 8
 		// 1 4 7
@@ -32,7 +41,7 @@ func (s SRS3x3Sprite) Rotate(x, y, clockwise uint) uint {
 	}
 }
 
-func (s SRS4x3Sprite) Rotate(x, y, clockwise uint) uint {
+func (s SRSSprite) Rotate12(x, y, clockwise int) int {
 	// Never rotates.
 	// 0 1 2 3
 	// 4 5 6 7
@@ -40,7 +49,7 @@ func (s SRS4x3Sprite) Rotate(x, y, clockwise uint) uint {
 	return y*4 + x
 }
 
-func (s SRS4x4Sprite) Rotate(x, y, clockwise uint) uint {
+func (s SRSSprite) Rotate16(x, y, clockwise int) int {
 	switch clockwise % 4 {
 	case 0:
 		// 0 1 2 3
@@ -71,44 +80,43 @@ func (s SRS4x4Sprite) Rotate(x, y, clockwise uint) uint {
 	}
 }
 
-type SRS4x4Sprite struct {
-	Piece [16]bool
+type SRSSprite struct {
+	Width  int
+	Height int
+	Piece  []bool
 }
 
-type SRS4x3Sprite struct {
-	Piece [12]bool
-}
-
-func NewSRS3x3Sprite(mask string) SRS3x3Sprite {
-	var s [9]bool
-	for i := 0; i < len(s); i++ {
-		s[i] = mask[i] != '.'
+func NewSRSSprite(mask string) SRSSprite {
+	size := len(mask)
+	sprite := SRSSprite{}
+	switch size {
+	case 9:
+		sprite.Width = 3
+		sprite.Height = 3
+	case 12:
+		sprite.Width = 4
+		sprite.Height = 3
+	case 16:
+		sprite.Width = 4
+		sprite.Height = 4
+	default:
+		panic("invalid mask size")
 	}
-	return SRS3x3Sprite{s}
-}
 
-func NewSRS4x3Sprite(mask string) SRS4x3Sprite {
-	var s [12]bool
-	for i := 0; i < len(s); i++ {
-		s[i] = mask[i] != '.'
+	sprite.Piece = make([]bool, size)
+	for i := 0; i < size; i++ {
+		sprite.Piece[i] = mask[i] != '.'
 	}
-	return SRS4x3Sprite{s}
-}
 
-func NewSRS4x4Sprite(mask string) SRS4x4Sprite {
-	var s [16]bool
-	for i := 0; i < len(s); i++ {
-		s[i] = mask[i] != '.'
-	}
-	return SRS4x4Sprite{s}
+	return sprite
 }
 
 var (
-	SRS_I_PIECE = NewSRS4x4Sprite("....IIII........")
-	SRS_J_PEICE = NewSRS3x3Sprite("J..JJJ...")
-	SRS_L_PEICE = NewSRS3x3Sprite("..LLLL...")
-	SRS_O_PIECE = NewSRS4x3Sprite(".OO..OO.....")
-	SRS_S_PEICE = NewSRS3x3Sprite(".SSSS....")
-	SRS_T_PEICE = NewSRS3x3Sprite(".T.TTT...")
-	SRS_Z_PEICE = NewSRS3x3Sprite("ZZ..ZZ...")
+	SRS_I_PIECE = NewSRSSprite("....IIII........")
+	SRS_J_PEICE = NewSRSSprite("J..JJJ...")
+	SRS_L_PEICE = NewSRSSprite("..LLLL...")
+	SRS_O_PIECE = NewSRSSprite(".OO..OO.....")
+	SRS_S_PEICE = NewSRSSprite(".SSSS....")
+	SRS_T_PEICE = NewSRSSprite(".T.TTT...")
+	SRS_Z_PEICE = NewSRSSprite("ZZ..ZZ...")
 )

@@ -51,8 +51,8 @@ func (t Tetromino) GameBoyBlocks(clockwise uint) string {
 	case O_PIECE:
 		return "...." +
 			".xx." +
-			".xx."
-		"...."
+			".xx." +
+			"...."
 	case J_PIECE:
 		switch clockwise % 4 {
 		case 0:
@@ -134,5 +134,5 @@ func (t Tetromino) GameBoyBlocks(clockwise uint) string {
 		}
 
 	}
-
+	panic("unreachable")
 }
