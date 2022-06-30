@@ -11,13 +11,18 @@ import (
 
 var (
 	titleBorder = lipgloss.AdaptiveColor{Light: "#874BFD", Dark: "#7D56F4"}
-	titleStyle  = lipgloss.NewStyle().
+
+	titleStyle = lipgloss.NewStyle().
 			Align(lipgloss.Center).
 			Margin(0, 2, 0, 0).
 			Foreground(foreground).
 			BorderStyle(lipgloss.DoubleBorder()).
 			BorderForeground(titleBorder)
+
 	quitStyle = lipgloss.NewStyle().
+			Width(width).
+			Margin(2, 2).
+			Align(lipgloss.Center).
 			Foreground(foreground)
 
 	docStyle = lipgloss.NewStyle().
@@ -46,6 +51,7 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "enter", "space":
 			m.playing = m.list.SelectedItem().(gameMode)
+			log.Printf("selecting %v", m.playing)
 			if m.playing == QuitGame {
 				return m, tea.Quit
 			}
@@ -63,9 +69,9 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m menuModel) View() string {
-	log.Printf("playing %s", m.playing)
+	// log.Printf("selecting %v", m.playing)
 	if m.playing == QuitGame {
-		return quitStyle.Render("Прощай!")
+		return quitStyle.Render("Прощай!\n")
 	}
 	return docStyle.Render(m.list.View())
 }
